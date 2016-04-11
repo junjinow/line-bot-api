@@ -39,10 +39,10 @@ class LineClient
     res = client.post do |request|
       request.url path
       request.headers = {
-          'Content-type' => 'application/json; charset=UTF-8',
-          'X-Line-ChannelID' => @channel_id,
-          'X-Line-ChannelSecret' => @channel_secret,
-          'X-Line-Trusted-User-With-ACL' => @channel_mid
+        'Content-type' => 'application/json; charset=UTF-8',
+        'X-Line-ChannelID' => @channel_id,
+        'X-Line-ChannelSecret' => @channel_secret,
+        'X-Line-Trusted-User-With-ACL' => @channel_mid
       }
       request.body = data
     end
@@ -50,15 +50,16 @@ class LineClient
   end
 
   def send(line_ids, message)
+    logger.info({"HERE!"})
     post('/v1/events', {
-        to: line_ids,
-        content: {
-            contentType: ContentType::TEXT,
-            toType: ToType::USER,
-            text: message
-        },
-        toChannel: TO_CHANNEL,
-        eventType: EVENT_TYPE
+      to: line_ids,
+      content: {
+        contentType: ContentType::TEXT,
+        toType: ToType::USER,
+        text: message
+      },
+      toChannel: TO_CHANNEL,
+      eventType: EVENT_TYPE
     })
   end
 end
